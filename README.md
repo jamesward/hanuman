@@ -67,9 +67,18 @@ Run Locally
 
         sbt stage
 
-3. Run the app:
+3. Start the static content server:
 
-        sbt run
+        target/start net.interdoodle.httpstaticfileserver.HttpStaticFileServer
+
+4. Start the app server:
+
+        export CONTENT_URL=http://localhost:9090/
+        target/start net.interdoodle.hanuman.AppServer
+
+5. Open the app:
+
+        http://localhost:8585/
 
 
 Run Clients Against Local or Remote Service Instances
