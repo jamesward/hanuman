@@ -3,7 +3,8 @@ package net.interdoodle.hanuman.domain
 import org.scalatest.Assertions._
 import org.scalatest.FunSuite
 import net.interdoodle.hanuman.message.TextMatch
-
+import blueeyes.json.JsonAST.JObject
+import blueeyes.json.Printer
 
 /**
  * @author Mike Slinn */
@@ -25,12 +26,15 @@ class SimpleCriticSuite extends FunSuite {
 
   test("assessText") {
     sCritic.assessText(document, null, "ab")
-    assert(sCritic.textMatch===TextMatch(null, 2, 0, 2))
+    var actual = Printer.compact(Printer.render(sCritic.textMatch.decompose)).toString
+    assert(actual==="""{"monkeyRef":"Null workCellRef","length":2,"startPos":0,"endPos":2}""")
 
     sCritic.assessText(document, null, "_abcd_")
-    assert(sCritic.textMatch===TextMatch(null, 4, 1, 5))
+    actual = Printer.compact(Printer.render(sCritic.textMatch.decompose)).toString
+    assert(actual==="""{"monkeyRef":"Null workCellRef","length":4,"startPos":3,"endPos":5}""")
 
     sCritic.assessText(document, null, "ab_ab__abcd_abcdefgh")
-    assert(sCritic.textMatch===TextMatch(null, 8, 12, 20))
+    actual = Printer.compact(Printer.render(sCritic.textMatch.decompose)).toString
+    assert(actual==="""{"monkeyRef":"Null workCellRef","length":8,"startPos":12,"endPos":20}""")
   }
 }
